@@ -1,0 +1,19 @@
+ tm
+====
+
+A simple "theme" manager in rust. It's stupidly simple to use.
+You give tm a text file with 16 colors and a template file, tm
+creates complete file out of the template and text file.
+
+ running
+=========
+
+Theoretically, it is possible to use this branch now. You can
+use the functions in the template.rs file and create files
+but a more user-friendly way will be made soon. Right now, I
+ported 40% of tm's source to rust.
+
+ license
+=========
+
+Licensed under GNU GPLv3
