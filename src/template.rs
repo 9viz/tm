@@ -95,8 +95,7 @@ fn get_color_num(line: &String) -> Vec<String> {
 #[allow(unused_must_use)]
 pub fn write_to_template(output_file_path: &str,
                          template_file_path: &str,
-                         colors_path: &str
-) {
+                         colors_path: &str) {
     /*
      * this function takes the templates and subsitutes
      * Xn with the nth color and writes to the file
