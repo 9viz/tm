@@ -17,20 +17,13 @@ fn copy_template() {
      * $HOME/.config/tm/template
      */
 
-    // I don't really know how to do a better job at this
     // tm's template directory
-    let template_dir = match env::var("TM_TEMPLATE_DIR") {
-        Ok(d) => d,
-        Err(_) => {
-            // fallback to XDG_ENV_VAR
-            let config_dir = match env::var("XDG_CONFIG_HOME") {
-                Ok(d) => d,
-                // fallback to ~/.config
-                Err(_) => format!("{}/.config", env::var("HOME").unwrap()),
-            };
-            format!("{}/tm/templates", config_dir)
-        },
-    };
+    let template_dir = env::var("TM_TEMPLATE_DIR").unwrap_or_else(|_| {
+        let config_dir = env::var("XDG_CONFIG_HOME")
+            .unwrap_or(format!("{}/.config", env::var("HOME").unwrap()));
+
+        return format!("{}/tm/templates", config_dir);
+    });
 
     let template_dir = PathBuf::from(&template_dir);
 
@@ -41,12 +34,8 @@ fn copy_template() {
     }
 
     // base cache directory
-    let cache_dir = match env::var("XDG_CACHE_HOME") {
-        Ok(d) => d,
-        Err(_) => {
-            format!("{}/.cache", env::var("HOME").unwrap())
-        },
-    };
+    let cache_dir = env::var("XDG_CACHE_HOME")
+        .unwrap_or(format!("{}/.cache", env::var("HOME").unwrap()));
 
     // get cache directory
     let template_cache_dir = format!("{}/tm/templates", cache_dir);
