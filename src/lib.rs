@@ -86,7 +86,7 @@ fn get_color_num(line: &String) -> Vec<String> {
         result.push(String::from(ch));
     }
 
-    return result
+    return result;
 }
 
 #[allow(unused_must_use)]
@@ -98,6 +98,7 @@ pub fn write_to_template(output_file_path: &str,
      * this function takes the templates and subsitutes
      * Xn with the nth color and writes to the file
      */
+
     let mut output = String::new();
     let mut color_indices: Vec<String> = Vec::new();
     let colors: Vec<String> = read_colors(&colors_path);
@@ -108,13 +109,14 @@ pub fn write_to_template(output_file_path: &str,
     let template: Vec<&str> = template.lines().collect();
 
     for line in template.iter() {
-        let line = String::from(*line);
+        let mut line = String::from(*line);
 
         if line.contains("X") {
             color_indices = get_color_num(&line);
         }
 
         if color_indices.len() == 0 {
+            output.push_str(&line); output.push_str(&"\n");
             continue;
         }
 
@@ -123,11 +125,7 @@ pub fn write_to_template(output_file_path: &str,
             let color_index: usize = color_index.parse().unwrap();
             let color = colors.get(color_index).unwrap();
 
-            if template_file_path.contains("tty") {
-                line.replace(&re_str, &color[1..]);
-            } else {
-                line.replace(&re_str, &color);
-            }
+            line = line.replace(&re_str, &color);
         }
 
         output.push_str(&line);
