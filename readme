@@ -1,7 +1,7 @@
  tm
 ====
 
-A simple "theme" manager in rust. It's stupidly simple to use.
+A simple "theme" manager in Rust. It's stupidly simple to use.
 You give tm a text file with 16 colors and a template file, tm
 creates complete file out of the template and text file.
 
@@ -11,7 +11,14 @@ creates complete file out of the template and text file.
 Theoretically, it is possible to use this branch now. You can
 use the functions in the template.rs file and create files
 but a more user-friendly way will be made soon. Right now, I
-ported 40% of tm's source to rust.
+ported 40% of tm's source to Rust.
+
+ todo
+======
+A lot of stuff...
+[ ] Refactor code
+[ ] Add comments in write_to_template function in template.rs
+[ ] Rewrite utils.py in Rust
 
  license
 =========
