@@ -25,6 +25,7 @@ A lot of stuff...
 [ ] Refactor code
 [ ] Add comments in write_to_template function in template.rs
 [ ] Rewrite utils.py in Rust
+[ ] Use s.insert(0, something) to prepend instead of format!
 
  license
 =========
