@@ -20,7 +20,7 @@ fn copy_template() {
     // tm's template directory
     let template_dir = env::var("TM_TEMPLATE_DIR").unwrap_or_else(|_| {
         let config_dir = env::var("XDG_CONFIG_HOME")
-            .unwrap_or(format!("{}/.config", env::var("HOME").unwrap()));
+            .unwrap_or_else(|_| format!("{}/.config", env::var("HOME").unwrap()));
 
         return format!("{}/tm/templates", config_dir);
     });
@@ -35,7 +35,7 @@ fn copy_template() {
 
     // base cache directory
     let cache_dir = env::var("XDG_CACHE_HOME")
-        .unwrap_or(format!("{}/.cache", env::var("HOME").unwrap()));
+        .unwrap_or_else(|_| format!("{}/.cache", env::var("HOME").unwrap()));
 
     // get cache directory
     let template_cache_dir = format!("{}/tm/templates", cache_dir);
