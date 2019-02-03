@@ -118,11 +118,6 @@ pub fn write_to_template(output_file_path: &str,
             color_indices = get_color_num(&line);
         }
 
-        if color_indices.len() == 0 {
-            output.push_str(&line); output.push_str(&"\n");
-            continue;
-        }
-
         for color_index in color_indices.iter() {
             let re_str = format!("X{}", color_index);
             let color_index: usize = color_index.parse().unwrap();

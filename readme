@@ -13,7 +13,20 @@ use the functions in the template.rs file and create files
 but a more user-friendly way will be made soon. Right now, I
 ported 40% of tm's source to rust.
 
+ exit codes
+============
+2 - template cache dir couldn't be created
+3 - template couldn't be copied to template cache dir
+4 - template cache dir couldn't be removed
+
+ todo
+======
+A lot of stuff...
+[ ] Refactor code
+[ ] Add comments in write_to_template function in template.rs
+[ ] Rewrite utils.py in Rust
+
  license
 =========
 
-Licensed under GNU GPLv3
+Still not sure... Might use BSD License

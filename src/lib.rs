@@ -9,6 +9,6 @@ mod tests {
     #[test]
     fn write() {
         let colors = "/home/viz/etc/colors/viking";
-        write_to_template(&"/home/viz/test", &"/home/viz/etc/tm/templates/dunstrc", &colors);
+        write_to_template(&"./test", &"/home/viz/etc/tm/templates/dunstrc", &colors);
     }
 }
