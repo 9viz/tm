@@ -104,9 +104,6 @@ fn write_to_template(output_file_path: &str,
     let mut output = String::new();
     let mut color_indices: Vec<String> = Vec::new();
 
-    // empty string to be used whenever a out-of-bound occurs
-    let null_string = String::new();
-
     // colors in a colors file
     let colors: Vec<String> = read_colors(&colors_path);
 
@@ -130,10 +127,7 @@ fn write_to_template(output_file_path: &str,
         for color_index in color_indices.iter() {
             let re_str = format!("X{}", color_index);
             let color_index: usize = color_index.parse().unwrap();
-            let color = colors.get(color_index).unwrap_or(&null_string);
-
-            // if a out-of-bound error occurs, continue
-            if *color == null_string { continue; }
+            let color = colors.get(color_index).unwrap();
 
             line = line.replace(&re_str, &color);
         }
@@ -152,6 +146,12 @@ fn write_to_template(output_file_path: &str,
 }
 
 pub fn run(colors_path: &str) {
+    /*
+     * the heavy lifter. does everything needed to create
+     * template files and completes the template after
+     * the necessary stuff
+     */
+
     // tm's template directory
     let template_dir = env::var("TM_TEMPLATE_DIR").unwrap_or_else(|_| {
         let config_dir = env::var("XDG_CONFIG_HOME")
@@ -173,7 +173,7 @@ pub fn run(colors_path: &str) {
         .unwrap_or_else(|_| format!("{}/.cache", env::var("HOME").unwrap()));
 
     // get cache directory
-    let template_cache_dir = format!("{}/tm/templates", cache_dir);
+    let template_cache_dir = format!("{}/tm/colors", cache_dir);
     let ptemplate_cache_dir = PathBuf::from(&template_cache_dir);
 
     // delete cache dir before proceeding
