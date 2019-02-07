@@ -18,6 +18,8 @@ ported 40% of tm's source to rust.
 2 - template cache dir couldn't be created
 3 - template couldn't be copied to template cache dir
 4 - template cache dir couldn't be removed
+5 - not enough arguments
+6 - couldn't read template
 
  todo
 ======

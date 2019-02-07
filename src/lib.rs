@@ -100,28 +100,39 @@ fn write_to_template(output_file_path: &str,
      * Xn with the nth color and writes to the file
      */
 
+    // variables needed
     let mut output = String::new();
     let mut color_indices: Vec<String> = Vec::new();
+
+    // empty string to be used whenever a out-of-bound occurs
     let null_string = String::new();
+
+    // colors in a colors file
     let colors: Vec<String> = read_colors(&colors_path);
 
+    // the template itself in a string
     let template = fs::read_to_string(&template_file_path)
-        .unwrap_or_else(|err| { println!("error: {}", err); process::exit(1); });
+        .unwrap_or_else(|err| { println!("error: {}", err); process::exit(6); });
 
+    // split it with newline so it can be looped thru
     let template: Vec<&str> = template.lines().collect();
 
     for line in template.iter() {
+        // change &str to String
         let mut line = String::from(*line);
 
+        // if line contains X, get the color_index
         if line.contains("X") {
             color_indices = get_color_num(&line);
         }
 
+        // iterate through color index and replace the approriate color
         for color_index in color_indices.iter() {
             let re_str = format!("X{}", color_index);
             let color_index: usize = color_index.parse().unwrap();
             let color = colors.get(color_index).unwrap_or(&null_string);
 
+            // if a out-of-bound error occurs, continue
             if *color == null_string { continue; }
 
             line = line.replace(&re_str, &color);
@@ -130,6 +141,9 @@ fn write_to_template(output_file_path: &str,
         output.push_str(&line);
         output.push_str(&"\n");
     }
+
+    // log
+    println!("creating {} from {}", output_file_path, template_file_path);
 
     fs::write(&output_file_path, &output).unwrap_or_else(|err| {
         println!("error: {}", err);
@@ -194,7 +208,7 @@ pub fn run(colors_path: &str) {
 
         let output_path = format!("{}/{}", template_cache_dir, file_name);
 
-        write_to_template(&output_path, &template, &colors_path);
+        write_to_template(&output_path, &template, colors_path);
     }
 }
 
