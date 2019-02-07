@@ -5,16 +5,43 @@ A simple "theme" manager in rust. It's stupidly simple to use.
 You give tm a text file with 16 colors and a template file, tm
 creates complete file out of the template and text file.
 
+ building
+==========
+
+Grab cargo to compile tm. Good thing about tm is that it only
+depends on the standard libraries, you don't need any other
+external libraries at all!
+
+After downloading cargo, run the following commands
+(assuming that you're in the same path as tm's source)
+`cargo install --path ./`
+
+If you have setup cargo bin path correctly, it should've
+installed it in your $PATH.
+
  running
 =========
 
-Theoretically, it is possible to use this branch now. You can
-use the functions in the template.rs file and create files
-but a more user-friendly way will be made soon. Right now, I
-ported 40% of tm's source to rust.
+To run tm, you do `tm /path/to/colors`. Nothing more,
+nothing less. It's plain and simple.
+
+ templates
+===========
+
+The template layout is quite different from the python
+version. Consequently, the colors file is quite different
+too. In this version, the colors file should not have a # in
+the color definition. So #ffffff becomes ffffff
+
+If the template files need a #, you mark the color as #Xn
+where n is the nth color in the given file.
+A typical template marker looks like this `color0="#X0"`
 
  exit codes
 ============
+tm returns a variety of exit codes, all of them are given
+below
+
 2 - template cache dir couldn't be created
 3 - template couldn't be copied to template cache dir
 4 - template cache dir couldn't be removed
