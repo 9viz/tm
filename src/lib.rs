@@ -25,20 +25,18 @@ fn read_colors(path: &str) -> Vec<String> {
     return colors;
 }
 
-fn get_color_num(line: &String) -> Vec<String> {
+fn get_color_num(lin: &String) -> Vec<String> {
     /*
      * in a template file, Xn indicates the nth color
      * which should be substituted. this function retuns
-     * all the n in a line
+     * all the n in a lin
      */
+
 
     // the vector which will be returned
     let mut result: Vec<String> = Vec::new();
 
-    let matches: Vec<_> = line.match_indices(char::is_numeric).collect();
-
-    // find a better to avoid edge cases
-    let mut prev_index = 1;
+    let matches: Vec<_> = lin.match_indices("X").collect();
 
     // check if a &str is numeric
     let is_numeric = |string: &str| {
@@ -50,42 +48,20 @@ fn get_color_num(line: &String) -> Vec<String> {
     };
 
     for m in matches.iter() {
-        // get the index number
-        let ind = m.0;
+        let ind = m.0 + 1;
+        let ch = lin.get(ind..ind+1).unwrap();
+        let mut ch = String::from(ch);
+        let next_ch = lin.get(ind+1..ind+2).unwrap();
 
-        // get the matching character
-        let mut ch = String::from(m.1);
-
-        // get the previous char
-        let prev_ch = line.get(ind-1..ind).unwrap_or("");
-
-        // check if the previous char is an X
-        // and if the prev_ch is not a number
-        // if it is not, skip the iteration
-        if prev_ch != "X" && ! is_numeric(prev_ch) {
+        if ! is_numeric(&ch) {
             continue;
         }
 
-        // get the next char and see if it is numeric
-        let next_ch = line.get(ind+1..ind+2).unwrap_or("");
-
-        // if it is numeric, then set the approriate prev_index and skip
-        // the iteration
-        if  is_numeric(next_ch) {
-            prev_index = ind;
-            continue;
+        if is_numeric(next_ch) {
+            ch = format!("{}{}", ch, next_ch);
         }
 
-        // if the ind-1 is prev_index, it means that line[prev_index] is numeric
-        // then prepend it to ch
-        if ind-1 == prev_index {
-            ch = String::from(format!("{}{}", line.get(prev_index..ind).unwrap(), ch));
-        }
-
-        // update the prev_index
-        prev_index = ind;
-
-        result.push(String::from(ch));
+        result.push(ch);
     }
 
     return result;
@@ -111,28 +87,32 @@ fn write_to_template(output_file_path: &str,
     let template = fs::read_to_string(&template_file_path)
         .unwrap_or_else(|err| { println!("error: {}", err); process::exit(6); });
 
-    // split it with newline so it can be looped thru
+    // split it with newlin so it can be looped thru
     let template: Vec<&str> = template.lines().collect();
 
-    for line in template.iter() {
+    for lin in template.iter() {
         // change &str to String
-        let mut line = String::from(*line);
+        let mut lin = String::from(*lin);
 
-        // if line contains X, get the color_index
-        if line.contains("X") {
-            color_indices = get_color_num(&line);
+        // if lin contains X, get the color_index
+        if lin.contains("X") {
+            color_indices = get_color_num(&lin);
         }
 
         // iterate through color index and replace the approriate color
         for color_index in color_indices.iter() {
             let re_str = format!("X{}", color_index);
             let color_index: usize = color_index.parse().unwrap();
+
+            // only support 15 colors
+            if color_index > 15 { continue; }
+
             let color = colors.get(color_index).unwrap();
 
-            line = line.replace(&re_str, &color);
+            lin = lin.replace(&re_str, &color);
         }
 
-        output.push_str(&line);
+        output.push_str(&lin);
         output.push_str(&"\n");
     }
 
@@ -219,5 +199,10 @@ mod tests {
     #[test]
     fn testy() {
         run(&"/home/viz/etc/colors/viking");
+    }
+
+    #[test]
+    fn write_test() {
+        write_to_template(&"./test", &"/home/viz/etc/tm/templates/colors_st.h", &"/home/viz/etc/colors/viking");
     }
 }
