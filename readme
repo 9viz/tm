@@ -41,6 +41,7 @@ A typical template marker looks like this `color0="#X0"`
 
  exit codes
 ============
+
 tm returns a variety of exit codes, all of them are given
 below
 
@@ -52,6 +53,7 @@ below
 
  todo
 ======
+
 A lot of stuff...
 [ ] Refactor code
 [x] Add comments in write_to_template function in template.rs

@@ -153,7 +153,7 @@ pub fn run(colors_path: &str) {
         .unwrap_or_else(|_| format!("{}/.cache", env::var("HOME").unwrap()));
 
     // get cache directory
-    let template_cache_dir = format!("{}/tm/colors", cache_dir);
+    let template_cache_dir = format!("{}/tm", cache_dir);
     let ptemplate_cache_dir = PathBuf::from(&template_cache_dir);
 
     // delete cache dir before proceeding
