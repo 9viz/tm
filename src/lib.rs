@@ -137,7 +137,7 @@ pub fn run(colors_path: &str) {
         let config_dir = env::var("XDG_CONFIG_HOME")
             .unwrap_or_else(|_| format!("{}/.config", env::var("HOME").unwrap()));
 
-        return format!("{}/tm/templates", config_dir);
+        return format!("{}/tm/", config_dir);
     });
 
     let ptemplate_dir = PathBuf::from(&template_dir);
