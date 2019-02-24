@@ -4,9 +4,11 @@ use tm;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
+    let mut verbose: bool = false;
+    let mut colors_path = Path::new(&"");
 
     let usage = || {
-        println!("usage: tm [/path/to/colors/file]");
+        println!("usage: tm /path/to/colors/file [-v for verbose]");
     };
 
     if args.len() == 1 {
@@ -15,8 +17,10 @@ fn main() {
         process::exit(5);
     }
 
-    // convert the str to a Path
-    let colors_path = Path::new(&args[1]);
+    for i in 1..args.len() {
+        if args[i] == "-v" { verbose=true; }
+        else { colors_path = Path::new(&args[i]); }
+    }
 
     // get the absolue path
     let colors_path = fs::canonicalize(&colors_path)
@@ -26,7 +30,7 @@ fn main() {
             process::exit(7);
         });
 
-    // convert it to string again
+    // convert it to &str again
     let colors_path = colors_path.to_str().unwrap();
-    tm::run(colors_path);
+    tm::run(colors_path, &verbose);
 }

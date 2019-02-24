@@ -50,14 +50,21 @@ fn get_color_num(lin: &String) -> Vec<String> {
     };
 
     for m in matches.iter() {
+        // the matching index of the char next to an X
         let ind = m.0 + 1;
+
+        // the char next to X
         let ch = lin.get(ind..ind+1).unwrap();
         let mut ch = String::from(ch);
-        let next_ch = lin.get(ind+1..ind+2).unwrap();
 
+        // if the char next to X is not a number,
+        // skip the current iteration
         if ! is_numeric(&ch) {
             continue;
         }
+
+        // the char next to the char next to X
+        let next_ch = lin.get(ind+1..ind+2).unwrap();
 
         if is_numeric(next_ch) {
             ch = format!("{}{}", ch, next_ch);
@@ -72,7 +79,8 @@ fn get_color_num(lin: &String) -> Vec<String> {
 #[allow(unused_must_use)]
 fn write_to_template(output_file_path: &str,
                      template_file_path: &str,
-                     colors_path: &str) {
+                     colors_path: &str,
+                     verbose: &bool) {
     /*
      * this function takes the templates and subsitutes
      * Xn with the nth color and writes to the file
@@ -120,7 +128,10 @@ fn write_to_template(output_file_path: &str,
     }
 
     // log
-    println!("creating {} from {}", output_file_path, template_file_path);
+
+    if *verbose {
+        println!("creating {} from {}", output_file_path, template_file_path);
+    }
 
     fs::write(&output_file_path, &output).unwrap_or_else(|err| {
         println!("error: {}", err);
@@ -128,7 +139,7 @@ fn write_to_template(output_file_path: &str,
     });
 }
 
-pub fn run(colors_path: &str) {
+pub fn run(colors_path: &str, verbose: &bool) {
     /*
      * the heavy lifter. does everything needed to create
      * template files and completes the template after
@@ -192,7 +203,7 @@ pub fn run(colors_path: &str) {
 
         let output_path = format!("{}/{}", template_cache_dir, file_name);
 
-        write_to_template(&output_path, &template, colors_path);
+        write_to_template(&output_path, &template, colors_path, verbose);
     }
 }
 
@@ -207,6 +218,6 @@ mod tests {
 
     #[test]
     fn write_test() {
-        write_to_template(&"./test", &"/home/viz/etc/tm/templates/colors_st.h", &"/home/viz/etc/colors/viking");
+        write_to_template(&"./test", &"/home/viz/etc/tm/templates/colors_st.h", &"/home/viz/etc/colors/viking", &true);
     }
 }

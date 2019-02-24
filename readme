@@ -56,6 +56,7 @@ below
 4 - template cache dir couldn't be removed
 5 - not enough arguments
 6 - couldn't read template
+7 - invalid path given
 
  env vars
 ==========
