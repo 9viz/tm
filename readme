@@ -5,7 +5,9 @@ A simple "theme" manager in rust. It's stupidly simple to use.
 You give tm a text file with 16 colors and a template file, tm
 creates complete file out of the template and text file.
 
-WARNING: There might be some bugs!
+If for some reason, you want to add more than 16 colors,
+you can do so by changing lib.rs file. But I will not
+guarantee that it will work!
 
  building
 ==========
@@ -30,14 +32,17 @@ nothing less. It's plain and simple.
  templates
 ===========
 
-The template layout is quite different from the python
-version. Consequently, the colors file is quite different
+The template layout is slightly different from the python
+version. Consequently, the colors file is slightly different
 too. In this version, the colors file should not have a # in
 the color definition. So #ffffff becomes ffffff
 
 If the template files need a #, you mark the color as #Xn
 where n is the nth color in the given file.
 A typical template marker looks like this `color0="#X0"`
+
+Some examples can be found at
+https://github.com/vizs/home/tree/master/etc/tm
 
  exit codes
 ============
@@ -51,16 +56,21 @@ below
 5 - not enough arguments
 6 - couldn't read template
 
- todo
-======
+ env vars
+==========
 
-A lot of stuff...
-[ ] Refactor code
-[x] Add comments in write_to_template function in template.rs
-[x] Rewrite utils.py in Rust
-[ ] Use s.insert(0, something) to prepend instead of format!
+tm's template dir can be set using an env var. tm first
+looks for TM_TEMPLATE_DIR, if it is not set, it falls
+back to $XDG_CONFIG_HOME/tm, if $XDG_CONFIG_HOME is not
+set, it falls back to $HOME/.config/tm
+
+ output dir
+============
+
+The finished files are stored in $XDG_CACHE_HOME/tm, if
+$XDG_CACHE_HOME is not set, it falls back to $HOME/.cache/tm
 
  license
 =========
 
-Still not sure... Might use BSD License
+Licensed under BSD 2-Clause License
