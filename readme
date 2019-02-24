@@ -50,6 +50,7 @@ https://github.com/vizs/home/tree/master/etc/tm
 tm returns a variety of exit codes, all of them are given
 below
 
+1 - finished file couldn't be written
 2 - template cache dir couldn't be created
 3 - template couldn't be copied to template cache dir
 4 - template cache dir couldn't be removed

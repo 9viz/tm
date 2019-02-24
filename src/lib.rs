@@ -7,6 +7,7 @@ fn read_colors(path: &str) -> Vec<String> {
     /*
      * read colors from a raw text file located at path
      * append the colors to a vector of String and return it
+     *
      */
     let mut colors: Vec<String> = Vec::new();
 
@@ -30,6 +31,7 @@ fn get_color_num(lin: &String) -> Vec<String> {
      * in a template file, Xn indicates the nth color
      * which should be substituted. this function retuns
      * all the n in a lin
+     *
      */
 
 
@@ -74,6 +76,7 @@ fn write_to_template(output_file_path: &str,
     /*
      * this function takes the templates and subsitutes
      * Xn with the nth color and writes to the file
+     *
      */
 
     // variables needed
@@ -130,6 +133,7 @@ pub fn run(colors_path: &str) {
      * the heavy lifter. does everything needed to create
      * template files and completes the template after
      * the necessary stuff
+     *
      */
 
     // tm's template directory
