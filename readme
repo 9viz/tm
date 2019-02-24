@@ -26,8 +26,13 @@ installed it in your $PATH.
  running
 =========
 
+Basic usage:
+
 To run tm, you do `tm /path/to/colors`. Nothing more,
 nothing less. It's plain and simple.
+
+enable verbose -> -v
+help -> -h
 
  templates
 ===========

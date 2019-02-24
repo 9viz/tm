@@ -8,7 +8,7 @@ fn main() {
     let mut colors_path = Path::new(&"");
 
     let usage = || {
-        println!("usage: tm /path/to/colors/file [-v for verbose]");
+        println!("usage: tm /path/to/colors/file [-v|-h]");
     };
 
     if args.len() == 1 {
@@ -19,6 +19,7 @@ fn main() {
 
     for i in 1..args.len() {
         if args[i] == "-v" { verbose=true; }
+        else if args[i] == "-h" { usage(); process::exit(0); }
         else { colors_path = Path::new(&args[i]); }
     }
 
