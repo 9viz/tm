@@ -1,4 +1,4 @@
-use std::{env, fs, process, path::Path};
+use std::{env, fs, process::exit, path::Path};
 
 use tm;
 
@@ -14,12 +14,12 @@ fn main() {
     if args.len() == 1 {
         println!("error: not enough arguments!");
         usage();
-        process::exit(5);
+        exit(5);
     }
 
     for i in 1..args.len() {
         if args[i] == "-v" { verbose=true; }
-        else if args[i] == "-h" { usage(); process::exit(0); }
+        else if args[i] == "-h" { usage(); exit(0); }
         else { colors_path = Path::new(&args[i]); }
     }
 
@@ -28,7 +28,7 @@ fn main() {
         .unwrap_or_else(|e| {
             println!("error: {}", e);
             usage();
-            process::exit(7);
+            exit(7);
         });
 
     // convert it to &str again
