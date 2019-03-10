@@ -128,7 +128,6 @@ fn write_to_template(output_file_path: &str,
     }
 
     // log
-
     if *verbose {
         println!("creating {} from {}", output_file_path, template_file_path);
     }
@@ -213,7 +212,7 @@ mod tests {
 
     #[test]
     fn testy() {
-        run(&"/home/viz/etc/colors/viking");
+        run(&"/home/viz/etc/colors/viking", &false);
     }
 
     #[test]

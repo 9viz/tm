@@ -18,9 +18,11 @@ fn main() {
     }
 
     for i in 1..args.len() {
-        if args[i] == "-v" { verbose=true; }
-        else if args[i] == "-h" { usage(); exit(0); }
-        else { colors_path = Path::new(&args[i]); }
+        match &args[i].as_str() {
+            &"-v" => verbose = true,
+            &"-h" => { usage(); exit(0); },
+            _ => colors_path = Path::new(&args[i]),
+        }
     }
 
     // get the absolue path
