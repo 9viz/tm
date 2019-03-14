@@ -12,7 +12,7 @@ fn main() {
     };
 
     if args.len() == 1 {
-        println!("error: not enough arguments!");
+        eprintln!("error: not enough arguments!");
         usage();
         exit(5);
     }
@@ -28,7 +28,7 @@ fn main() {
     // get the absolue path
     let colors_path = fs::canonicalize(&colors_path)
         .unwrap_or_else(|e| {
-            println!("error: {}", e);
+            eprintln!("error: {}", e);
             usage();
             exit(7);
         });

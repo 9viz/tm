@@ -13,7 +13,7 @@ fn read_colors(path: &str) -> Vec<String> {
 
     let contents = fs::read_to_string(&path)
         .unwrap_or_else(|err| {
-            println!("error: {}", err);
+            eprintln!("error: {}", err);
             process::exit(0);
     });
 
@@ -96,7 +96,7 @@ fn write_to_template(output_file_path: &str,
 
     // the template itself in a string
     let template = fs::read_to_string(&template_file_path)
-        .unwrap_or_else(|err| { println!("error: {}", err); process::exit(6); });
+        .unwrap_or_else(|err| { eprintln!("error: {}", err); process::exit(6); });
 
     // split it with newlin so it can be looped thru
     let template: Vec<&str> = template.lines().collect();
@@ -133,7 +133,7 @@ fn write_to_template(output_file_path: &str,
     }
 
     fs::write(&output_file_path, &output).unwrap_or_else(|err| {
-        println!("error: {}", err);
+        eprintln!("error: {}", err);
         process::exit(1);
     });
 }
@@ -158,7 +158,7 @@ pub fn run(colors_path: &str, verbose: &bool) {
 
     // if the template directory doesn't exist, exit
     if ! ptemplate_dir.is_dir() {
-        println!("error: tm template is non-existence! create one");
+        eprintln!("error: tm template is non-existence! create one");
         process::exit(2);
     }
 
@@ -174,7 +174,7 @@ pub fn run(colors_path: &str, verbose: &bool) {
     if ptemplate_cache_dir.is_dir() {
         fs::remove_dir_all(&ptemplate_cache_dir)
             .unwrap_or_else(|e| {
-                println!("error: {}", e);
+                eprintln!("error: {}", e);
                 process::exit(4);
             });
     }
@@ -182,7 +182,7 @@ pub fn run(colors_path: &str, verbose: &bool) {
     // create the template cache dir
     fs::create_dir_all(&ptemplate_cache_dir)
         .unwrap_or_else(|e| {
-            println!("error: {}", e);
+            eprintln!("error: {}", e);
             process::exit(2);
         });
 
