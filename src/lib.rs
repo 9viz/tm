@@ -129,7 +129,7 @@ fn write_to_template(output_file_path: &str,
 
     // log
     if *verbose {
-        println!("creating {} from {}", output_file_path, template_file_path);
+        eprintln!("creating {} from {}", output_file_path, template_file_path);
     }
 
     fs::write(&output_file_path, &output).unwrap_or_else(|err| {
