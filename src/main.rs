@@ -8,7 +8,9 @@ fn main() {
     let mut colors_path = Path::new(&"");
 
     let usage = || {
-        println!("usage: tm /path/to/colors/file [-v|-h]");
+        println!("usage: tm [-v|-h] /path/to/colors/file");
+        println!("           -v: enable verbose output");
+        println!("           -h: see this help message");
     };
 
     if args.len() == 1 {
@@ -21,7 +23,7 @@ fn main() {
         match &args[i].as_str() {
             &"-v" => verbose = true,
             &"-h" => { usage(); exit(0); },
-            _ => colors_path = Path::new(&args[i]),
+            _     => colors_path = Path::new(&args[i]),
         }
     }
 
