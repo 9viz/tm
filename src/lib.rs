@@ -43,9 +43,7 @@ fn get_color_num(lin: &String) -> Vec<String> {
     let is_numeric = |string: &str| {
         let nch: Vec<_> = string.matches(char::is_numeric).collect();
 
-        if nch.len() == 0 { return false; }
-
-        return true;
+        nch.len() != 0
     };
 
     for m in matches.iter() {
@@ -66,7 +64,7 @@ fn get_color_num(lin: &String) -> Vec<String> {
         }
 
         /* the char next to the char next to X */
-        let next_ch = lin.get(ind+1..ind+2).unwrap();
+        let next_ch = lin.get(ind+1..ind+2).unwrap_or_else(|| { "" });
 
         if is_numeric(next_ch) {
             ch = format!("{}{}", ch, next_ch);
@@ -99,6 +97,10 @@ fn write_to_template(output_file_path: &str,
 
     let template: Vec<&str> = template.lines().collect();
 
+    if *verbose {
+        eprintln!("creating {} from {}", output_file_path, template_file_path);
+    }
+
     for lin in template.iter() {
         let mut lin = String::from(*lin);
 
@@ -119,10 +121,6 @@ fn write_to_template(output_file_path: &str,
 
         output.push_str(&lin);
         output.push_str(&"\n");
-    }
-
-    if *verbose {
-        eprintln!("creating {} from {}", output_file_path, template_file_path);
     }
 
     fs::write(&output_file_path, &output).unwrap_or_else(|err| {
