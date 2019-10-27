@@ -47,7 +47,7 @@ where n is the nth color in the given file.
 A typical template marker looks like this `color0="#X0"`
 
 Some examples can be found at
-https://github.com/vizs/home/tree/master/etc/tm
+https://github.com/vizs/home/tree/master/etc/prog.d/tm
 
  exit codes
 ============

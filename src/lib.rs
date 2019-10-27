@@ -147,7 +147,7 @@ pub fn run(colors_path: &str, verbose: &bool) {
     let ptemplate_dir = PathBuf::from(&template_dir);
 
     if ! ptemplate_dir.is_dir() {
-        eprintln!("error: tm template is non-existence! create one");
+        eprintln!("error: tm template is non-existent! create one");
         process::exit(2);
     }
 
